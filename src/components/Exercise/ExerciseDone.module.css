@@ -1,0 +1,4 @@
+.exercise-done {
+  display: flex;
+  flex-direction: column;
+}

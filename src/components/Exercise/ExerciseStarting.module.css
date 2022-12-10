@@ -1,0 +1,27 @@
+.exercise-starting {
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-image {
+  width: 70%;
+  border: 5px solid #3623bf;
+  border-radius: 12px;
+  box-shadow: 0 0 6px #3623bf;
+  margin: 10px auto;
+}
+
+.exercise-next-name {
+  text-align: center;
+  margin: 10px auto;
+}
+
+.exercise-name {
+  color: #3623bf;
+}
+
+.exercise-pre-timer {
+  font-size: 1.30em;
+  font-size: bolder;
+  margin: 0px auto;
+}

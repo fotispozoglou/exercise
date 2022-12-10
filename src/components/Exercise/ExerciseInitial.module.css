@@ -1,0 +1,4 @@
+.exercise-initial {
+  display: flex;
+  flex-direction: column;
+}

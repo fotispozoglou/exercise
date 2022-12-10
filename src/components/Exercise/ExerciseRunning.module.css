@@ -1,0 +1,28 @@
+.workout-image {
+  width: 70%;
+  border: 5px solid #3623bf;
+  border-radius: 12px;
+  box-shadow: 0 0 6px #3623bf;
+  margin: 10px auto;
+}
+
+.exercise-running {
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-started {
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-repeats {
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-repeats-text {
+  font-size: 1.8em;
+  text-align: center;
+  margin: 10px auto;
+}
