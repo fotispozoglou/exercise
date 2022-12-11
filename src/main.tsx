@@ -6,6 +6,9 @@ import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route } 
 import Exercise from './pages/Exercise';
 import RootLayout from './components/Layout/RootLayout';
 import Home from './pages/Home';
+import configureSpotifyStore from './hooks-store/spotify';
+
+configureSpotifyStore();
 
 const routerElements = createRoutesFromElements(
   <Route path='/' element={ <App /> }>
