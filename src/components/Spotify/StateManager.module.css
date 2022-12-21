@@ -1,0 +1,77 @@
+.state-manager {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 20px;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 6px;
+}
+
+.state-manager-image-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  margin: 0 8px 0 0;
+}
+
+.state-manager-image-container img {
+  border-radius: 8px;
+}
+
+.state-manager-name {
+  display: flex;
+  flex-direction: row;
+}
+
+.state-manager-name-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.state-manager-time {
+  margin: auto 0 5px 0;
+}
+
+.state-manager-name-time {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.state-manager-volume {
+  margin: auto 0 auto auto;
+  max-height: max-content;
+  height: 88px;
+}
+
+.state-manager-volume input[type='range']::-webkit-slider-thumb {
+  display: none;
+}
+
+.state-manager-name-text {
+  font-weight: bolder;
+  font-size: 0.8em;
+  text-align: center;
+  width: 100%;
+}
+
+.state-manager-volume {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 0 20px;
+}
+
+.state-manager-buttons {
+  width: max-content;
+  margin: auto 0 auto auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 1.5em;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.state-manager-toggle {
+  margin: 0 18px;
+}

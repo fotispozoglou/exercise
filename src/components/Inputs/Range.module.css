@@ -1,0 +1,37 @@
+.range, .range-vertical {
+  height: max-content;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  background-color: #b5acac;
+}
+
+.range-input {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  opacity: 0;
+}
+
+.range-input-track {
+  height: 6px;
+  background-color: #383;
+}
+
+.range-vertical {
+  width: 6px;
+  height: 100%;
+  display: flex;
+  background-color: grey;
+}
+
+.range-vertical .range-input-track {
+  transform: rotate(180deg);
+  margin-top: auto;
+  width: 100%;
+}
+
+.range-vertical .range-input {
+  height: 100%;
+}

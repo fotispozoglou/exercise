@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Exercise, ExerciseType } from "../types/exercise";
-import useTimer, { TimerState, TimerType } from "./useTimer";
+import { Exercise, ExerciseType } from "../../types/exercise";
+import useTimer, { TimerState, TimerType } from "../useTimer";
 
 export enum ExerciseState {
   Initialized = 1,

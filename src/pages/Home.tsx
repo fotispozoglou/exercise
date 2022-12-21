@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import useSpotifyAuth from "../hooks/useSpotifyAuth";
-import useSpotifyPlayer from "../hooks/useSpotifyPlayer";
+import Player from "../components/Spotify/Player";
+import useSpotifyAuth from "../hooks/spotify/useSpotifyAuth";
+import { RootState } from "../store";
 import classes from './Home.module.css';
 
 const code = new URLSearchParams( window.location.search ).get('code');
@@ -11,14 +13,18 @@ const AUTH_URL = 'http://localhost:3000/login';
 
 const Home : React.FC = () => {
 
-  const { token } = useSpotifyAuth( code, state );
+  useSpotifyAuth( code, state );
 
-  const { player } = useSpotifyPlayer( token );
+  const isLoggedIn = useSelector(( state : RootState ) => state.spotifyAuth.isLoggedIn );
 
   return (
     <div className={ classes['home'] }>
       <Link to="/exercise" className={ classes['start-exercise'] }>START EXERCISE</Link>
-      <a className={ classes['spotify-btn'] } href={ AUTH_URL }>LOGIN WITH SPOTIFY</a>
+      {
+        !isLoggedIn &&
+        <a className={ classes['spotify-btn'] } href={ AUTH_URL }>LOGIN WITH SPOTIFY</a>
+      }
+      <Player />
     </div>
   );
 

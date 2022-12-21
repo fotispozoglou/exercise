@@ -1,5 +1,5 @@
 import React from "react";
-import { ExerciseState } from "../../hooks/useExercisesSlider";
+import { ExerciseState } from "../../hooks/exercises/useExercisesSlider";
 import { Exercise, ExerciseType } from "../../types/exercise";
 import classes from './ExerciseRunning.module.css';
 

@@ -1,0 +1,1 @@
+export const EXERCISE_API = 'http://localhost:3000';

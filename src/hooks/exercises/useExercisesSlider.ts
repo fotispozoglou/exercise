@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Exercise, ExerciseType } from "../types/exercise";
+import { Exercise, ExerciseType } from "../../types/exercise";
 import useBeep from "./useBeep";
-import useTimer, { TimerState, TimerType } from "./useTimer";
+import useTimer, { TimerState, TimerType } from "../useTimer";
 
 export enum ExerciseState {
   Initialized = 1,

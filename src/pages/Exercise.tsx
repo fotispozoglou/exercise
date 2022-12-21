@@ -4,7 +4,7 @@ import ExerciseInitial from "../components/Exercise/ExerciseInitial";
 import ExerciseRunning from "../components/Exercise/ExerciseRunning";
 import ExerciseStarting from "../components/Exercise/ExerciseStarting";
 import { exercises } from "../data/exercises";
-import useExerciseSlider, { ExerciseState } from "../hooks/useExercisesSlider";
+import useExerciseSlider, { ExerciseState } from "../hooks/exercises/useExercisesSlider";
 import { ExerciseType } from "../types/exercise";
 import classes from './Exercise.module.css';
 

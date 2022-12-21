@@ -1,0 +1,18 @@
+.playlist-item {
+  width: 90%;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: row;
+  padding: 8px;
+  background-color: #333;
+  border-radius: 6px;
+}
+
+.playlist-item-name {
+  height: max-content;
+  margin: 0 0 auto 5px;
+}
+
+.playlist-item-play {
+  margin: auto 8px auto auto;
+}
