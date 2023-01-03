@@ -5,7 +5,9 @@ import { RootState } from "../../store";
 
 const SpotifyGuard : React.FC = (  ) => {
 
-  const token = useSelector(( state : RootState ) => state.spotifyAuth.token );
+  const isLoggedIn = useSelector(( state : RootState ) => state.spotifyAuth.isLoggedIn );
+
+  if ( !isLoggedIn ) return null;
 
   return <Outlet />;
 

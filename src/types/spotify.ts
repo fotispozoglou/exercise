@@ -203,3 +203,35 @@ export type Playlist = {
     type : string;
     context_uri: string;
 };
+
+export type PlaylistCover = {
+    url : string;
+    height : number;
+    width : number;
+}[];
+
+export type PlaylistTrack = {
+    track : {
+        id : string;
+        name : string;
+        album : {
+            id : string;
+            images : {
+                url : string;
+                height : number;
+                width : number;
+            }[];
+        }
+    }
+}
+
+export type PlaylistItems = {
+    items : PlaylistTrack[];
+};
+
+export type Device = {
+    id : string;
+    is_active : boolean;
+    name: string;
+    type: string;
+} | null;

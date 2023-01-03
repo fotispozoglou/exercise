@@ -4,7 +4,7 @@ import { getStringFromMillis } from "../utils/time";
 export enum TimerState {
   Initialized = 1,
   Started = 2,
-  Paused = -2,
+  Paused = 3,
   Completed = 4,
 };
 
@@ -20,94 +20,80 @@ export const TimerStrings = new Map([
   [ TimerState.Completed, 'completed' ],
 ]);
 
-const useTimer = ( initialTime : number, type : number, onComplete: (() => void) | null ) => {
+const useTimer = ( initialTime : number ) => {
 
-  const [ millis, setMillis ] = useState( initialTime * 1000 );
-  
-  const [ state, setState ] = useState( TimerState.Initialized );    
-
-  const toggleState = () => { 
-
-    if ( state === TimerState.Initialized ) return setState( TimerState.Started );
-    
-    if (!([ TimerState.Started, TimerState.Paused ].includes( state ))) return;
-
-    setState( currentState => currentState * -1  ); 
-  
-  };
-
-  const reset = () => {
-
-    setState( currentState => {
-
-      setMillis( 0 );
-
-      return TimerState.Initialized;
-
-    }); 
-
-  };
-
-  const setTime = ( seconds : number ) => { setMillis( (seconds + 1) * 1000 ); };
-
-  const start = () => { setState( TimerState.Started ) };
-
-  const startI = ( seconds : number ) => {
-
-    setTime( seconds );
-
-    start();
-
-  };
-
-  const complete = () => { setState( TimerState.Completed ) };
+  const [ time, setTime ] = useState( initialTime * 1000 );
+  const [ state, setState ] = useState< TimerState >( TimerState.Initialized );
 
   useEffect(() => {
 
     if ( state !== TimerState.Started ) return;
 
-    let timerTimeout : ReturnType< typeof setTimeout >;
+    if ( time <= 0 ) {
 
-    if ( millis <= 0 && type === TimerType.Countdown ) {
-
-      return setState( currentState => {
-        
-        if ( onComplete ) onComplete();
-
-        return TimerState.Completed; 
-      
-      });
+      return setState( TimerState.Completed );
 
     }
 
-    timerTimeout = setTimeout(() => {
+    const timerTimeout = setTimeout(() => {
 
-      if ( type === TimerType.Countdown ) {
-
-        setMillis( currentSeconds => currentSeconds - 50 );
-
-      } else {
-
-        setMillis( currentSeconds => currentSeconds + 50 );
-
-      }
+      setTime( currentTime => currentTime - 50 );
 
     }, 50);
 
-    return () => { clearTimeout( timerTimeout ); };
+    return () => clearTimeout( timerTimeout );
 
-  }, [ millis, state ]);
+  }, [ time, state ]);
 
-  const timeString = getStringFromMillis( millis );  
+  const timeString = getStringFromMillis( time );
+
+  const startTimer = () => {
+
+    setState( TimerState.Started );
+
+  };
+
+  const pauseTimer = () => {
+
+    setState( TimerState.Paused );
+
+  };
+
+  const continueTimer = () => {
+
+    setState( TimerState.Started );
+
+  };
+
+  const restartTimer = (  ) => {
+
+    setTime( initialTime );
+
+    setState( TimerState.Started );
+
+  };
+
+  const resetTimer = ( newTime : number | null ) => {
+
+    setTime( newTime ? newTime * 1000 : initialTime );
+
+  };
+
+  const setTimer = ( newTime : number ) => {
+
+    setTime( newTime * 1000 );
+
+  };
 
   return {
     timeString,
     state,
-    start,
-    complete,
-    toggleState,
-    reset,
-    startI
+    pauseTimer,
+    continueTimer,
+    restartTimer,
+    resetTimer,
+    startTimer,
+    setTimer
   };
 
 };

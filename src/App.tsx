@@ -4,8 +4,11 @@ import './App.css';
 import Player from './components/Spotify/Player';
 import { useSelector, useDispatch } from 'react-redux';
 import { setToken } from './store/slices/spotify-auth';
+import { RootState } from './store';
 
 function App() {
+
+  const isLoggedIn = useSelector(( state : RootState ) => state.spotifyAuth.isLoggedIn);
 
   const dispatch = useDispatch(  );
 
@@ -19,7 +22,7 @@ function App() {
 
       if ( tokenData.error ) return;
 
-      dispatch(setToken( tokenData.token ));
+      dispatch(setToken( tokenData.access_token ));
 
     };
 
@@ -30,10 +33,6 @@ function App() {
   return (
     <div className="App">
       <Outlet />
-      {
-        // spotify.isLoggedIn &&
-        // <Player />
-      }
     </div>
   );
   

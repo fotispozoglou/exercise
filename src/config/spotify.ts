@@ -10,7 +10,10 @@ export const SPOTIFY = {
   PLAYER_PLAY: `${ SPOTIFY_API_BASE }/me/player/play`,
   SPOTIFY_CURRENT_TRACK: `${ SPOTIFY_API_BASE }/me/player/currently-playing`,
   PLAYER_QUEUE: `${ SPOTIFY_API_BASE }/me/player/queue`,
-  PLAYLIST_ITEMS: `${ SPOTIFY_API_BASE }/playlists/PLAYER_ID/tracks`
+  DEVICES: `${ SPOTIFY_API_BASE }/me/player/devices`,
+  // PLAYLIST_ITEMS: `${ SPOTIFY_API_BASE }/playlists/PLAYER_ID/tracks`
+  PLAYLIST_ITEMS: ( playerID : string ) => `${ SPOTIFY_API_BASE }/playlists/${ playerID }/tracks`,
+  PLAYLIST_COVER: ( playerID : string ) => `${ SPOTIFY_API_BASE }/playlists/${ playerID }/images`,
   // SPOTIFY_SDK_URL: 'https://sdk.scdn.co/spotify-player.js',
   // SPOTIFY_SDK_URL: 'https://sdk.scdn.co/spotify-player.js',
   // SPOTIFY_SDK_URL: 'https://sdk.scdn.co/spotify-player.js',

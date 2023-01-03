@@ -1,0 +1,33 @@
+.playlist-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-image {
+  margin: 20px auto;
+  border-radius: 8px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 0 14px #ffffff91;
+}
+
+.playlist-track {
+  display: flex;
+  flex-direction: row;
+  margin: 10px auto;
+  width: 90%;
+  background-color: #101010a3;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.playlist-track-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+}
+
+.playlist-track-name {
+  font-size: 0.8em;
+  margin: 0 auto auto 10px;
+}

@@ -12,90 +12,171 @@ export enum ExerciseState {
   Completed = 5,
 };
 
+export const exerciseActiveStates = [
+  ExerciseState.Starting,
+  ExerciseState.Started,
+  ExerciseState.Resting,
+];
+
+// export const ExerciseColors = new Map([
+//   [ ExerciseState.Initialized, 'none' ],
+//   [ ExerciseState.Starting, 'none' ],
+//   [ ExerciseState.Started, 'inset 0px 0px 10px 12px rgba(54, 35, 191, 0.34)' ],
+//   [ ExerciseState.Paused, 'rgba(32, 28, 151, 0.34) 0px 0px 10px 12px inset' ],
+//   [ ExerciseState.Resting, 'inset 0px 0px 10px 12px rgba(54, 35, 191, 0.34)' ],
+//   [ ExerciseState.Completed, 'none' ],
+// ]);
+
+export const ExerciseColors = new Map([
+  [ ExerciseState.Initialized, 'none' ],
+  [ ExerciseState.Starting, 'none' ],
+  [ ExerciseState.Started, 'inset 0px 0px 10px 12px red' ],
+  [ ExerciseState.Paused, 'inset 0px 0px 10px 12px blue' ],
+  [ ExerciseState.Resting, 'inset 0px 0px 10px 12px green' ],
+  [ ExerciseState.Completed, 'none' ],
+]);
+
 const useExerciseSlider = ( exercises : Exercise[] ) => {
 
-  const { beep } = useBeep();
-
   const [ state, setState ] = useState( ExerciseState.Initialized );
-
+  const [ previousState, setPreviousState ] = useState( ExerciseState.Initialized );
   const [ currentExercise, setCurrentExercise ] = useState( 0 );
-
-  const onTimerComplete = () => {
-
-    beep();
-
-    if ( state === ExerciseState.Starting ) return setState( ExerciseState.Started );
-
-    if ( state === ExerciseState.Started ) {
-     
-      if ( currentExercise + 1 >= exercises.length ) return setState( ExerciseState.Completed );
-      
-      return setState( ExerciseState.Resting );
-
-    }
-
-    if ( state === ExerciseState.Resting ) {
-     
-      setCurrentExercise( currentExercise => currentExercise + 1 );
-      
-      return setState( ExerciseState.Started );
-
-    }
-
-  };
-
-  const next = () => {
-
-    beep();
-
-    if ( currentExercise + 1 >= exercises.length ) return setState( ExerciseState.Completed );
-
-    setState( ExerciseState.Resting );
-
-  };
 
   const {
     timeString,
-    startI,
-    start: startTimer,
-    toggleState,
-  } = useTimer( 5, TimerType.Countdown, onTimerComplete );
+    state: timerState,
+    startTimer,
+    resetTimer,
+    pauseTimer,
+    setTimer,
+    continueTimer
+  } = useTimer( 5 );
 
-  const start = () => {
+  const handleSetState = ( newState : ExerciseState ) => {
 
-    setState( ExerciseState.Starting );
+    if ( exerciseActiveStates.includes( state ) && exerciseActiveStates.includes( newState ) ) {
 
-    startTimer();
+      setPreviousState( newState );
+
+      setState( newState );
+
+    } else {
+
+      setPreviousState( state );
+
+      setState( newState );
+
+    }
 
   };
 
   useEffect(() => {
 
-    if ( !([ ExerciseState.Started, ExerciseState.Resting ].includes( state )) ) return;
+    if ( timerState === TimerState.Completed ) {      
 
-    if ( exercises[ currentExercise ].type === ExerciseType.Repeats && state === ExerciseState.Started ) return;
+      if ( state === ExerciseState.Starting ) return handleSetState( ExerciseState.Started );
+
+      if ( state === ExerciseState.Started ) { 
+
+        return setCurrentExercise( currentExercise => {
+
+          if ( currentExercise + 1 >= exercises.length ) {
+
+            handleSetState( ExerciseState.Completed );
+
+            return 0;
+
+          }
+
+          handleSetState( ExerciseState.Resting );
+
+          return currentExercise + 1;
+
+        });
+
+      }
+
+      if ( state === ExerciseState.Resting ) { 
+
+        return handleSetState( ExerciseState.Started );
+
+      }
+
+    }
+
+  }, [ timerState ]);
+
+  useEffect(() => {
+
+    if ( previousState === ExerciseState.Paused && exerciseActiveStates.includes( state ) ) {
+
+      return continueTimer();
+      
+    }
+
+    if ( state === ExerciseState.Starting ) return startTimer();
 
     if ( state === ExerciseState.Started ) {
 
-      startI( exercises[ currentExercise ].time || 0 );
+      if ( exercises[ currentExercise ].type !== ExerciseType.Time ) return;
 
-    } else {
+      setTimer( exercises[ currentExercise ].time || 0 );
 
-      startI( 5 );
+      startTimer();
+
+    }
+
+    if ( state === ExerciseState.Resting ) {
+
+      setTimer( exercises[ currentExercise ].restTime );
+
+      startTimer();
+
+    }
+
+    if ( state === ExerciseState.Paused ) {
+
+      pauseTimer();
 
     }
 
   }, [ state ]);
 
+  const startExercise = (  ) => {
+
+    handleSetState( ExerciseState.Starting );
+
+  };
+
+  const startExerciseRest = (  ) => {
+
+    setCurrentExercise( currentExercise => currentExercise + 1 );
+
+    handleSetState( ExerciseState.Resting );
+
+  };
+
+  const toggleExerciseState = () => {
+
+    handleSetState( 
+      exerciseActiveStates.includes( state ) ?  
+      ExerciseState.Paused 
+      :
+      previousState
+    );
+
+  };
+
   return {
-    timeString,
-    start,
-    state,
-    toggleState,
-    next,
+    currentExerciseIndex: currentExercise,
     currentExercise: exercises[ currentExercise ],
-    nextExercise: exercises[ currentExercise + 1 ]
-  }
+    nextExercise: exercises[ currentExercise + 1 ],
+    timeString,
+    state,
+    startExercise,
+    startExerciseRest,
+    toggleExerciseState,
+  };
 
 };
 

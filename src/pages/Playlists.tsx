@@ -17,6 +17,9 @@ const Playlists : React.FC< PlaylistProps > = () => {
     const getPlaylists = async () => {
 
       const playlists = await getUserPlaylists();
+      
+
+      if ( !playlists ) return;
 
       setPlaylists( playlists.items );
 

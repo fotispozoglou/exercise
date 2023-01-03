@@ -1,11 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect } from "react";
 import useSpotifyPlayer, { UseSpotifyStatus } from "../../hooks/spotify/useSpotifyPlayer";
 import StateManager from "./StateManager";
 
 const Player : React.FC = (  ) => {
 
-  const { status } = useSpotifyPlayer( );
+  const { 
+    status,
+    transferPlayback,
+    playPlaylist,
+    getCurrentTrack,
+    loadCurrentTrack,
+    getActiveDevice,
+    activeDevice
+  } = useSpotifyPlayer( );
 
   const currentTrack = {
     name : '',
@@ -16,6 +24,9 @@ const Player : React.FC = (  ) => {
     <div>
       {
         status === UseSpotifyStatus.Ready && <StateManager currentTrack={ currentTrack } />
+      }
+      {
+        activeDevice && <p>{ activeDevice.name }</p>
       }
     </div>
   );

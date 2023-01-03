@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { getPlaybackState, transferPlayback, getPlayingTrack, getUserPlaylists, playPlaylist, getPlayerQueue } from "../../utils/spotify";
+import { getPlaybackState, transferPlayback, getPlayingTrack, getUserPlaylists, playPlaylist, getPlayerQueue, getDevices } from "../../utils/spotify";
 import useInitializeSpotify from "./useInitializeSpotify";
+import { setActiveDevice } from '../../store/slices/spotify-player';
+import { Device } from "../../types/spotify";
 
 declare global {
   interface Window { 
@@ -22,9 +24,15 @@ export enum UseSpotifyStatus {
 
 const useSpotifyPlayer = ( ) => {  
 
+  useInitializeSpotify( );
+
   const token = useSelector(( state : RootState ) => state.spotifyAuth.token );
 
-  const { player, status, deviceID } = useInitializeSpotify( );
+  const { player, status, deviceID, activeDevice } = useSelector(
+    ( state : RootState ) => state.spotifyPlayer
+  );
+
+  const dispatch = useDispatch();
 
   const handleTransferPlayback = async () => {
 
@@ -50,11 +58,41 @@ const useSpotifyPlayer = ( ) => {
 
   };
 
+  const handleGetCurrentTrack = async (  ) => {
+
+    await getPlayingTrack( token );
+
+  };
+
+  const handleLoadCurrentTrack = async (  ) => {
+
+    // await transferPlayback( token, [ deviceID ] );
+
+    const playbackData = await getPlayerQueue( token );
+
+    console.log(playbackData);
+
+  };
+
+  const handleGetActiveDevice = async (  ) => {
+
+    const devicesData = await getDevices( token );
+
+    const activeDevice = devicesData.devices.filter( ( device : Device ) => device && device.is_active )[0];
+
+    dispatch( setActiveDevice( activeDevice ) );
+
+  };
+
   return {
     transferPlayback: handleTransferPlayback,
     getUserPlaylists: handleGetUserPlaylists,
     playPlaylist: handlePlayPlaylist,
+    getCurrentTrack: handleGetCurrentTrack,
+    loadCurrentTrack: handleLoadCurrentTrack,
+    getActiveDevice: handleGetActiveDevice,
     status,
+    activeDevice
   };
 
 };

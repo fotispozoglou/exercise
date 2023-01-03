@@ -10,8 +10,6 @@ export const getPlayerQueue = async ( token : string ) => {
     }
   });
 
-  console.log( playbackStateResponse );
-
   if ( playbackStateResponse.status !== 200 ) return {};
 
   const playbackStateData = await playbackStateResponse.json();
@@ -28,8 +26,6 @@ export const getPlaybackState = async ( token : string ) => {
       'Content-Type': 'application/json'
     }
   });
-
-  console.log( playbackStateResponse );
 
   if ( playbackStateResponse.status !== 200 ) return {};
 
@@ -70,9 +66,7 @@ export const getPlayingTrack = async ( token : string ) => {
   
   const data = await playingTrackResponse.json();
 
-  console.log(data);
-
-  // return transferPlaybackResponse.status;
+  return data;
 
 };
 
@@ -106,6 +100,22 @@ export const playPlaylist = async ( token : string, contextURI: string, deviceID
   });
   
   const data = await userPlaylistsResponse.json();
+
+  return data;
+
+};
+
+export const getDevices = async ( token : string ) => {
+
+  const devicesResponse = await fetch(`${ SPOTIFY.DEVICES }`, {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${ token }`,
+      'Content-Type': 'application/json'
+    }
+  });
+  
+  const data = await devicesResponse.json();
 
   return data;
 

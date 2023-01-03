@@ -33,6 +33,8 @@ const useInitializeSpotify = ( ) => {
 
       player.addListener('ready', ({ device_id } : { device_id : string }) => {
                   
+        dispatch( setDeviceID( device_id ) );
+
         dispatch( setStatus( UseSpotifyStatus.Ready ) );
       
       });
@@ -68,7 +70,7 @@ const useInitializeSpotify = ( ) => {
           return;
         
         }
-    
+
         console.log(state);
     
       }));
@@ -79,12 +81,6 @@ const useInitializeSpotify = ( ) => {
     };
 
   }, [ token ]);
-
-  return {
-    player: null,
-    deviceID: '',
-    status
-  };
 
 };
 

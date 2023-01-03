@@ -8,5 +8,6 @@ export type Exercise = {
   name : string;
   time : number | null;
   repeats : number | null;
+  restTime : number;
   type : ExerciseType;
 };

@@ -7,14 +7,14 @@ import Exercise from './pages/Exercise';
 import RootLayout from './components/Layout/RootLayout';
 import Home from './pages/Home';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlay, faPause, faForwardStep, faBackwardStep, faPodcast } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faForwardStep, faBackwardStep, faPodcast, faCheck } from '@fortawesome/free-solid-svg-icons';
 import Playlists from './pages/Playlists';
 import SpotifyGuard from './components/Auth/SpotifyGuard';
 import PlaylistItems from './pages/PlaylistItems';
 import { store } from './store';
 import { Provider } from 'react-redux';
 
-library.add( faPlay, faPause, faForwardStep, faBackwardStep, faPodcast );
+library.add( faPlay, faPause, faForwardStep, faBackwardStep, faPodcast, faCheck );
 
 const routerElements = createRoutesFromElements(
   <Route path='/' element={ <Provider store={ store }><App /></Provider> }>
@@ -24,7 +24,7 @@ const routerElements = createRoutesFromElements(
     <Route path='/exercise' element={ <Exercise /> } />
     <Route element={ <SpotifyGuard /> }>
       <Route path='/playlists' element={ <Playlists /> } />
-      <Route path='/playlists/:projectID' element={ <PlaylistItems /> } />
+      <Route path='/playlists/:playlistID' element={ <PlaylistItems /> } />
     </Route>
   </Route>
 );

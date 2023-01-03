@@ -1,0 +1,29 @@
+.exercise-resting {
+  display: flex;
+  flex-direction: column;
+}
+
+.exercise-image {
+  width: 70%;
+  border: 5px solid #3623bf;
+  border-radius: 12px;
+  box-shadow: 0 0 6px #3623bf;
+  margin: 10px auto;
+}
+
+.exercise-time {
+  text-align: center;
+  width: 100%;
+  margin: 5px auto 0px auto;
+}
+
+.exercise-name {
+  color: #3623bf;
+  font-weight: bolder;
+}
+
+.next-exercise-name {
+  text-align: center;
+  width: 100%;
+  margin: 10px auto;
+}
