@@ -47,7 +47,9 @@ const useTimer = ( initialTime : number ) => {
 
   const timeString = getStringFromMillis( time );
 
-  const startTimer = () => {
+  const startTimer = ( newTime ?: number ) => {
+
+    if ( newTime ) setTime( newTime * 1000 );
 
     setState( TimerState.Started );
 

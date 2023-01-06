@@ -17,7 +17,7 @@ const ExerciseResting : React.FC< ExerciseRestingProps > = ({ timeString, nextEx
 
   return (
     <div className={ classes['exercise-resting'] }>
-      <img className={ classes['exercise-image'] } src={ `${ nextExercise.id }.gif` } />
+      {/* <img className={ classes['exercise-image'] } src={ `${ nextExercise.id }.gif` } /> */}
       <h1 className={ classes['exercise-time'] }>{ timeString }</h1>
       { 
         nextExercise && 

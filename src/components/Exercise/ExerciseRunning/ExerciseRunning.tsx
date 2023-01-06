@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { ExerciseColors, ExerciseState } from "../../../hooks/exercises/useExercisesSlider";
 import { TimerState } from "../../../hooks/useTimer";
@@ -27,9 +28,12 @@ const ExerciseRunning : React.FC< ExerciseRunningProps > = (
   return (
     <div className={ classes['exercise-running'] }>
       {
-        ( state === ExerciseState.Started || state === ExerciseState.Paused ) &&
+        (state === ExerciseState.Resting || state === ExerciseState.Started || state === ExerciseState.Paused) &&
+        <img className={ classes['workout-image'] } src={`${ `${ currentExercise.id }.gif` }`} />
+      }
+      {
+        ( state === ExerciseState.Started ) &&
         <div className={ classes['exercise-started'] }>
-          <img className={ classes['workout-image'] } src={`${ `${ currentExercise.id }.gif` }`} />
           {
             currentExercise.type === ExerciseType.Time ?
             <TimeExercise 
@@ -55,13 +59,14 @@ const ExerciseRunning : React.FC< ExerciseRunningProps > = (
           toggleState={ toggleState }
         />
       }
-      {/* {
+      {
         state === ExerciseState.Paused &&
-        <div>
-          <p>Paused</p>
-          <button onClick={ toggleState }>aaaa</button>
-        </div>
-      } */}
+        <FontAwesomeIcon
+          icon={ state === ExerciseState.Paused ? 'play' : 'pause' }
+          onClick={ toggleState }
+          className={ `${ classes['toggle-state-btn']} fa-fw` }
+        />
+      }
     </div>
   );
 
