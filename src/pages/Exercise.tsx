@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ExerciseDone from "../components/Exercise/ExerciseDone";
 import ExerciseInitial from "../components/Exercise/ExerciseInitial";
@@ -6,7 +5,6 @@ import ExerciseRunning from "../components/Exercise/ExerciseRunning/ExerciseRunn
 import ExerciseStarting from "../components/Exercise/ExerciseStarting";
 import { exercises } from "../data/exercises";
 import useExerciseSlider, { ExerciseState } from "../hooks/exercises/useExercisesSlider";
-import { ExerciseType } from "../types/exercise";
 import classes from './Exercise.module.css';
 
 const Exercise : React.FC = () => {
@@ -15,6 +13,7 @@ const Exercise : React.FC = () => {
     currentExercise,
     nextExercise,
     timeString,
+    // timeCountedString,
     state,
     isPaused,
     isResting,
@@ -24,32 +23,32 @@ const Exercise : React.FC = () => {
     currentExerciseIndex
   } = useExerciseSlider( exercises );
 
-  return (
-    <div className={ classes['test-container'] }>
-      { currentExercise && <p>Current: { currentExerciseIndex } { currentExercise.name } - { currentExercise.type === ExerciseType.Repeats ? "REP" : "TIM" }</p> }
-      { nextExercise && <p>Next: { currentExerciseIndex + 1 } { nextExercise.name } - { nextExercise.type === ExerciseType.Repeats ? "REP" : "TIM" }</p> }
-      { state === ExerciseState.Initialized && <p>State: Initialized</p> }
-      { state === ExerciseState.Starting && <p>State: Starting</p> }
-      { state === ExerciseState.Started && <p>State: Started</p> }
-      { isResting && <p>State: Resting</p> }
-      { isPaused && <p>State: Paused</p> }
-      <p className={ classes['test-timer'] }>{ timeString }</p>
-      { state === ExerciseState.Initialized && <button className={ classes['test-start'] } onClick={ startExercise }>start</button> }
-      {   
-        currentExercise &&
-        ( 
-          currentExercise.type === ExerciseType.Repeats && 
-          [ ExerciseState.Started || isPaused ].includes( state ) 
-        ) &&
-        <button onClick={ startExerciseRest }>Done</button>
-      }
-      <FontAwesomeIcon
-        className={ `${ classes['test-icon']} fa-fw` }    
-        icon={ isPaused ? 'play' : 'pause' }
-        onClick={ toggleExerciseState }
-      />
-    </div>
-  )
+  // return (
+  //   <div className={ classes['test-container'] }>
+  //     { currentExercise && <p>Current: { currentExerciseIndex } { currentExercise.name } - { currentExercise.type === ExerciseType.Repeats ? "REP" : "TIM" }</p> }
+  //     { nextExercise && <p>Next: { currentExerciseIndex + 1 } { nextExercise.name } - { nextExercise.type === ExerciseType.Repeats ? "REP" : "TIM" }</p> }
+  //     { state === ExerciseState.Initialized && <p>State: Initialized</p> }
+  //     { state === ExerciseState.Starting && <p>State: Starting</p> }
+  //     { state === ExerciseState.Started && <p>State: Started</p> }
+  //     { isResting && <p>State: Resting</p> }
+  //     { isPaused && <p>State: Paused</p> }
+  //     <p className={ classes['test-timer'] }>{ timeString }</p>
+  //     { state === ExerciseState.Initialized && <button className={ classes['test-start'] } onClick={ startExercise }>start</button> }
+  //     {   
+  //       currentExercise &&
+  //       ( 
+  //         currentExercise.type === ExerciseType.Repeats && 
+  //         [ ExerciseState.Started || isPaused ].includes( state ) 
+  //       ) &&
+  //       <button onClick={ startExerciseRest }>Done</button>
+  //     }
+  //     <FontAwesomeIcon
+  //       className={ `${ classes['test-icon']} fa-fw` }    
+  //       icon={ isPaused ? 'play' : 'pause' }
+  //       onClick={ toggleExerciseState }
+  //     />
+  //   </div>
+  // )
 
   return (
     <div className={ classes['exercise'] }>
@@ -70,7 +69,11 @@ const Exercise : React.FC = () => {
         )
       }
       {
-        state === ExerciseState.Starting && <ExerciseStarting currentExercise={ currentExercise } preStartString={ timeString } />
+        state === ExerciseState.Starting && <ExerciseStarting 
+          currentExercise={ currentExercise } preStartString={ timeString } 
+          isPaused={ isPaused }
+          toggleState={ toggleExerciseState }
+        />
       }
       {
         [ ExerciseState.Started, isResting, isPaused ].includes( state ) &&
@@ -80,6 +83,8 @@ const Exercise : React.FC = () => {
           state={ state } 
           currentExercise={ currentExercise } 
           nextExercise={ nextExercise }
+          isPaused={ isPaused }
+          isResting={ isResting }
           timeString={ timeString }
           next={ startExerciseRest }
         />

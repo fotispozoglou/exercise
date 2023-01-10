@@ -35,6 +35,7 @@ const useExerciseSlider = ( exercises : Exercise[] ) => {
 
   const {
     timeString,
+    // timeCountedString,
     state: timerState,
     startTimer,
     resetTimer,
@@ -107,7 +108,11 @@ const useExerciseSlider = ( exercises : Exercise[] ) => {
 
     setIsPaused( isPaused => {
 
-      if ( exercises[ currentExercise ].type !== ExerciseType.Time && !isResting ) return isPaused; 
+      if ( 
+        exercises[ currentExercise ].type !== ExerciseType.Time && 
+        !isResting &&
+        state === ExerciseState.Started
+      ) return isPaused; 
 
       isPaused ? continueTimer() : pauseTimer();
 
@@ -125,6 +130,7 @@ const useExerciseSlider = ( exercises : Exercise[] ) => {
     isResting,
     isPaused,
     state,
+    // timeCountedString,
     startExercise,
     startExerciseRest,
     toggleExerciseState,

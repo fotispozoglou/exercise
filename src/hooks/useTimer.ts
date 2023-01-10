@@ -23,6 +23,7 @@ export const TimerStrings = new Map([
 const useTimer = ( initialTime : number ) => {
 
   const [ time, setTime ] = useState( initialTime * 1000 );
+  // const [ timeCounted, setTimeCounted ] = useState( 0 );
   const [ state, setState ] = useState< TimerState >( TimerState.Initialized );
 
   useEffect(() => {
@@ -39,6 +40,8 @@ const useTimer = ( initialTime : number ) => {
 
       setTime( currentTime => currentTime - 50 );
 
+      // setTimeCounted( timeCounted => timeCounted + 50 );
+
     }, 50);
 
     return () => clearTimeout( timerTimeout );
@@ -46,6 +49,8 @@ const useTimer = ( initialTime : number ) => {
   }, [ time, state ]);
 
   const timeString = getStringFromMillis( time );
+
+  // const timeCountedString = getStringFromMillis( timeCounted );
 
   const startTimer = ( newTime ?: number ) => {
 
@@ -89,6 +94,7 @@ const useTimer = ( initialTime : number ) => {
 
   return {
     timeString,
+    // timeCountedString,
     state,
     pauseTimer,
     continueTimer,

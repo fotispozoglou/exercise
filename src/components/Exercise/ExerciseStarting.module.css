@@ -25,3 +25,17 @@
   font-size: bolder;
   margin: 0px auto;
 }
+
+.toggle-state-btn {
+  width: max-content;
+  margin: 10px auto;
+  padding: 12px;
+  background-color: #3623bf;
+  font-size: 2em;
+  border-radius: 8px;
+  box-shadow: 0 0 8px #40377d;
+}
+
+.toggle-state-btn:hover {
+  cursor: pointer;
+}

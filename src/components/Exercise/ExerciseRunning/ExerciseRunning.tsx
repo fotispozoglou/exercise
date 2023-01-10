@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { ExerciseColors, ExerciseState } from "../../../hooks/exercises/useExercisesSlider";
-import { TimerState } from "../../../hooks/useTimer";
+import { ExerciseState } from "../../../hooks/exercises/useExercisesSlider";
 import { Exercise, ExerciseType } from "../../../types/exercise";
 import ExerciseResting from "./ExerciseResting";
 import classes from './ExerciseRunning.module.css';
@@ -14,33 +13,34 @@ export type ExerciseRunningProps = {
   nextExercise : Exercise | null;
   timeString : string;
   next : () => void;
+  isPaused : boolean;
+  isResting : boolean;
   toggleState : () => void;
 };
 
 const ExerciseRunning : React.FC< ExerciseRunningProps > = (
-  { state, currentExercise, nextExercise, timeString, next, toggleState }
+  { state, currentExercise, nextExercise, timeString, next, toggleState, isPaused, isResting }
   ) => {
-
-  const stateColor = ExerciseColors.get( state );
-
-  document.querySelector('html')!.style.boxShadow = stateColor || '';
 
   return (
     <div className={ classes['exercise-running'] }>
       {
-        (state === ExerciseState.Resting || state === ExerciseState.Started || state === ExerciseState.Paused) &&
+        !isResting && 
         <img className={ classes['workout-image'] } src={`${ `${ currentExercise.id }.gif` }`} />
       }
       {
-        ( state === ExerciseState.Started ) &&
+        isResting &&
+        nextExercise &&
+        <img className={ classes['workout-image'] } src={`${ `${ nextExercise.id }.gif` }`} />
+      }
+      {
+        ( state === ExerciseState.Started && !isResting ) &&
         <div className={ classes['exercise-started'] }>
           {
             currentExercise.type === ExerciseType.Time ?
             <TimeExercise 
               currentExercise={ currentExercise } 
               timeString={ timeString }
-              state={ state }
-              toggleState={ toggleState }
             />
             :
             <RepeatsExercise 
@@ -51,18 +51,16 @@ const ExerciseRunning : React.FC< ExerciseRunningProps > = (
         </div>
       }
       {
-        state === ExerciseState.Resting &&
+        isResting &&
         <ExerciseResting 
-          state={ state }
           timeString={ timeString }
-          nextExercise={ currentExercise }
-          toggleState={ toggleState }
+          nextExercise={ nextExercise }
         />
       }
       {
-        state === ExerciseState.Paused &&
+        ( currentExercise.type === ExerciseType.Time || isResting ) &&
         <FontAwesomeIcon
-          icon={ state === ExerciseState.Paused ? 'play' : 'pause' }
+          icon={ isPaused ? 'play' : 'pause' }
           onClick={ toggleState }
           className={ `${ classes['toggle-state-btn']} fa-fw` }
         />
