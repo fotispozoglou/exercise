@@ -20,6 +20,7 @@ const Home : React.FC = () => {
   return (
     <div className={ classes['home'] }>
       <Link to="/exercise" className={ classes['start-exercise'] }>START EXERCISE</Link>
+      <Link to="/exercises" className={ classes['start-exercise'] }>EXERCISES</Link>
       {
         !isLoggedIn &&
         <a className={ classes['spotify-btn'] } href={ AUTH_URL }>LOGIN WITH SPOTIFY</a>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExerciseDone from "../components/Exercise/ExerciseDone";
 import ExerciseInitial from "../components/Exercise/ExerciseInitial";
 import ExerciseRunning from "../components/Exercise/ExerciseRunning/ExerciseRunning";
 import ExerciseStarting from "../components/Exercise/ExerciseStarting";
 import { exercises } from "../data/exercises";
+import { addExercise } from "../database/exercises";
 import useExerciseSlider, { ExerciseState } from "../hooks/exercises/useExercisesSlider";
+import { Exercise as EXType, ExerciseType } from "../types/exercise";
 import classes from './Exercise.module.css';
 
 const Exercise : React.FC = () => {

@@ -1,0 +1,23 @@
+.title-container {
+  width: 90%;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.title, .title-error {
+  margin-left: 2.5%;
+  font-size: 1.5em;
+  color: #3623bf;
+  text-shadow: 0px 0px 20px #1e17f0;
+}
+
+.back-btn {
+  margin: auto 0px;
+}
+
+.back-btn-container {
+  background: none;
+  width: max-content;
+  margin: auto 0;
+}

@@ -1,0 +1,19 @@
+.exercises {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-exercise {
+  width: max-content;
+  margin: 5px 2.5% 5px auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+}
+
+.home-btn {
+  width: max-content;
+  margin: auto 3%;
+}
